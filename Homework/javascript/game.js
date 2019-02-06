@@ -8,7 +8,9 @@ var wordbank = ["luke","han","leia","vader","palpatine","empire", "rebels"];
 var wins = 0;
 var losses = 0;
 var guessed = [];
+var guessedParsed = [];
 var emptyWord = [];
+var computerChoiceParsed = [];
 
 
 
@@ -18,61 +20,70 @@ var inputText = document.getElementById("guessed");
 var winsText = document.getElementById("wins");
 var lossesText = document.getElementById("losses");
 var remainingText = document.getElementById("remaining-guesses");
+var computerChoice = 0;
+var splits = [];
 
 
 
-
-
-//Computer Guess
-var computerChoice = wordbank[Math.floor(Math.random() * wordbank.length)];
-var splits = computerChoice.split('');
-var emptyWord = []
-console.log(computerChoice);
-
-
+//Computer Guess function
+function startGame(){
+splits = [];
+emptyWord = [];
+computerChoice = 0;
+guessed = [];
+computerChoice = wordbank[Math.floor(Math.random() * wordbank.length)];
+//splitting computer guess into individual letters
+splits = computerChoice.split('');
+    for (var j = 0; j < splits.length; j++){
+    emptyWord.push('_');
+    }
+//text content for the game
+inputText.textContent = "Your Guesses: " + guessed;
+winsText.textContent = "Wins: " + wins;
+lossesText.textContent = "Losses: " + losses;
 gameWord.textContent = emptyWord;
+remainingText.textContent = 9;
+console.log(computerChoice);
+}
+
+startGame()
+
+
 
 //splitting the computerchoice into individual letters and making an array with that many _'s
-for(var j = 0; j < splits.length; j++){
-    emptyWord.push('_');
-}
 
 
 
 //Keyup Function
 document.onkeyup = function(event){
+
     //for loop that verifies the user guess against the chosen word and adds wins
     for (var i = 0; i < computerChoice.length; i++){
 
         if(event.key === computerChoice[i].toLowerCase()){
             emptyWord[i] = event.key;
         }
-        else {
-            for(j = 0; j <= guessed.length; j++){
-                if(event.key === computerChoice[i] && event.key === guessed[j]){
-                }
-                else if(event.key !== guessed[j]) {
-                    guessed.push(event.key)
-                }
-            }
-        }
     }
+    console.log(emptyWord);
+    console.log(splits);
+    console.log(guessed.length)
 
-    //Putting the guessed letters in the "guessed" section
-    
-    //makes the userinput print into the webpage unless it's already there
-    if(guessed.length === 9){
-        guessed = [];
+    //for loop for adding our guesses
+    for (var k = 0; k <= guessed.length; k++){
+        if(k === 10){
+            startGame()
+        }
+        else if (k > 0){
+            guessed.push(event.key)
+        }
     }
  
     //adding wins
-    if(splits === emptyWord){
+    if(splits.toString() === emptyWord.toString()){
         wins++;
+        startGame()
     }
-    //text content for the game
     inputText.textContent = "Your Guesses: " + guessed;
-    winsText.textContent = "Wins: " + wins;
-    gameWord.textContent = emptyWord;
 } 
 
 
