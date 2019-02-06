@@ -44,7 +44,7 @@ inputText.textContent = "Your Guesses: " + guessed;
 winsText.textContent = "Wins: " + wins;
 lossesText.textContent = "Losses: " + losses;
 gameWord.textContent = emptyWord;
-remainingText.textContent = guess;
+remainingText.textContent = "Guesses Left: " + guess;
 console.log(computerChoice);
 }
 
@@ -98,7 +98,7 @@ inputText.textContent = "Your Guesses: " + guessed;
 winsText.textContent = "Wins: " + wins;
 lossesText.textContent = "Losses: " + losses;
 gameWord.textContent = emptyWord;
-remainingText.textContent = guess;
+remainingText.textContent = "Guesses Left: " + guess;
 
 inWord = true;
 } 
