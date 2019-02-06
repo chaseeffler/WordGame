@@ -7,10 +7,11 @@ var wordbank = ["luke","han","leia","vader","palpatine","empire", "rebels"];
 //Creating the Arrays that will keep track of wins/losses/guesses
 var wins = 0;
 var losses = 0;
+var guess = 9;
 var guessed = [];
-var guessedParsed = [];
 var emptyWord = [];
-var computerChoiceParsed = [];
+var inWord = true;
+var letter = 0;
 
 
 
@@ -30,9 +31,10 @@ function startGame(){
 splits = [];
 emptyWord = [];
 computerChoice = 0;
+guess = 9;
 guessed = [];
+inWord = true;
 computerChoice = wordbank[Math.floor(Math.random() * wordbank.length)];
-//splitting computer guess into individual letters
 splits = computerChoice.split('');
     for (var j = 0; j < splits.length; j++){
     emptyWord.push('_');
@@ -42,7 +44,7 @@ inputText.textContent = "Your Guesses: " + guessed;
 winsText.textContent = "Wins: " + wins;
 lossesText.textContent = "Losses: " + losses;
 gameWord.textContent = emptyWord;
-remainingText.textContent = 9;
+remainingText.textContent = guess;
 console.log(computerChoice);
 }
 
@@ -63,27 +65,42 @@ document.onkeyup = function(event){
         if(event.key === computerChoice[i].toLowerCase()){
             emptyWord[i] = event.key;
         }
+        else if(event.key !== computerChoice[i].toLowerCase()) {
+            inWord = false;
+        }
     }
+
+    if (inWord === false){
+        guessed.push(event.key);
+        guess--;
+    }
+
+
     console.log(emptyWord);
     console.log(splits);
-    console.log(guessed.length)
+    console.log(guessed);
 
-    //for loop for adding our guesses
+    //for loop for restarting the game if user runs out of guesses
     for (var k = 0; k <= guessed.length; k++){
-        if(k === 10){
+        if(k === 10 || guess === 0){
             startGame()
+            losses++;
         }
-        else if (k > 0){
-            guessed.push(event.key)
         }
-    }
+    
  
     //adding wins
     if(splits.toString() === emptyWord.toString()){
         wins++;
         startGame()
     }
-    inputText.textContent = "Your Guesses: " + guessed;
+inputText.textContent = "Your Guesses: " + guessed;
+winsText.textContent = "Wins: " + wins;
+lossesText.textContent = "Losses: " + losses;
+gameWord.textContent = emptyWord;
+remainingText.textContent = guess;
+
+inWord = true;
 } 
 
 
