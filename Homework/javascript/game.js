@@ -80,28 +80,29 @@ document.onkeyup = function(event){
     console.log(splits);
     console.log(guessed);
 
-    //for loop for restarting the game if user runs out of guesses
-    for (var k = 0; k <= guessed.length; k++){
-        if(k === 10 || guess === 0){
-            startGame()
-            losses++;
-        }
-        }
-    
- 
-    //adding wins
-    if(splits.toString() === emptyWord.toString()){
-        wins++;
-        startGame()
-    }
 inputText.textContent = "Your Guesses: " + guessed;
 winsText.textContent = "Wins: " + wins;
 lossesText.textContent = "Losses: " + losses;
 gameWord.textContent = emptyWord;
 remainingText.textContent = "Guesses Left: " + guess;
 
-inWord = true;
-} 
+//for loop for restarting the game if user runs out of guesses
+for (var k = 0; k <= guessed.length; k++){
+    if(guess === 0){
+        losses++;
+        alert("You Lost!");
+        startGame()
+    }
+    }
+
+
+//adding wins
+if(splits.toString() === emptyWord.toString()){
+    wins++;
+    alert("You Won!");
+    startGame();
+}
+}
 
 
 //function to reset the game
